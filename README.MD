@@ -6,12 +6,12 @@ Steps:
 
 1) A new method is added to 'MyClass' class.
 
-2) A light bulb with suggestions is displayed on method selection. 
+2) A light bulb with suggestions is displayed on method selection.\
 ![](Docs/2021-11-08-15-16-00.png)
 
-3) By clicking on the light bulb, concrete suggestion is displayed: Add 'Test' to IMyClass interface.
+3) By clicking on the light bulb, concrete suggestion is displayed: Add 'Test' to IMyClass interface.\
 ![](Docs/2021-11-08-15-16-06.png)
 
-4) A new method is created in the IMyClass interface.
+4) A new method is created in the IMyClass interface.\
 ![](Docs/2021-11-08-15-16-22.png)
 
