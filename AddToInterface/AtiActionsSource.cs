@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Language.Intellisense;
+﻿using EnvDTE;
+using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Operations;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EnvDTE;
 using static Microsoft.VisualStudio.Shell.Package;
 
 namespace AddToInterface
@@ -74,15 +74,13 @@ namespace AddToInterface
 
             try
             {
-                TextExtent extent;
-                if (TryGetWordUnderCaret(out extent) && extent.IsSignificant)
+                if (TryGetWordUnderCaret(out var extent) && extent.IsSignificant)
                 {
                     var activeDocument = _dte.ActiveDocument;
                     TextSelection textSelection = (TextSelection)activeDocument.Selection;
                     TextPoint point = (TextPoint)textSelection.ActivePoint;
 
-                    CodeFunction srcFunction;
-                    if (TryGetFunctionFromPoint(point, out srcFunction))
+                    if (TryGetFunctionFromPoint(point, out var srcFunction))
                     {
                         // Function validation
                         bool isFuncRegular = (srcFunction.FunctionKind == vsCMFunction.vsCMFunctionFunction);
@@ -95,8 +93,7 @@ namespace AddToInterface
                         }
 
                         // Code scan
-                        CodeClass codeClass = srcFunction.Parent as CodeClass;
-                        if (codeClass != null)
+                        if (srcFunction.Parent is CodeClass codeClass)
                         {
                             // Interfaces scan
                             var interfaces = GetAllImplementedInterfaces(codeClass);
@@ -171,7 +168,6 @@ namespace AddToInterface
 
             wordExtent = navigator.GetExtentOfWord(point);
             return true;
-
         }
 
         private bool ContainSameParameters(CodeFunction func1, CodeFunction func2)
