@@ -1,5 +1,4 @@
-﻿using EnvDTE;
-using Microsoft.VisualStudio.Language.Intellisense;
+﻿using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Operations;
@@ -8,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EnvDTE;
+using static Microsoft.VisualStudio.Shell.Package;
 
 namespace AddToInterface
 {
@@ -17,7 +18,7 @@ namespace AddToInterface
         private readonly ITextBuffer _textBuffer;
         private readonly ITextView _textView;
         private readonly List<AtiAction> _suggestedActions = new List<AtiAction>();
-        private readonly DTE _dte = (DTE)Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(DTE));
+        private readonly DTE _dte = (DTE)GetGlobalService(typeof(DTE));
 
         public AtiActionsSource(AtiActionsSourceProvider testSuggestedActionsSourceProvider, ITextView textView, ITextBuffer textBuffer)
         {
@@ -34,13 +35,12 @@ namespace AddToInterface
                 {
                     return HasSuggestedActions();
                 }
-            });
+            }, cancellationToken);
         }
 
         public IEnumerable<SuggestedActionSet> GetSuggestedActions(ISuggestedActionCategorySet requestedActionCategories, SnapshotSpan range, CancellationToken cancellationToken)
         {
-            TextExtent extent;
-            bool isSignificant = TryGetWordUnderCaret(out extent) && extent.IsSignificant;
+            var isSignificant = TryGetWordUnderCaret(out var extent) && extent.IsSignificant;
 
             if (isSignificant)
             {
@@ -163,7 +163,7 @@ namespace AddToInterface
             }
             else
             {
-                wordExtent = default(TextExtent);
+                wordExtent = default;
                 return false;
             }
 

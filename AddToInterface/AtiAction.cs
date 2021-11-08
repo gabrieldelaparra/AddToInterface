@@ -20,45 +20,15 @@ namespace AddToInterface
             _srcFunction = codeFunction;
         }
 
-        public string DisplayText
-        {
-            get
-            {
-                return $"Add '{_srcFunction.Name}' to {_interface.Name} interface";
-            }
-        }
+        public string DisplayText => $"Add '{_srcFunction.Name}' to {_interface.Name} interface";
 
-        public string IconAutomationText
-        {
-            get
-            {
-                return null;
-            }
-        }
+        public string IconAutomationText => null;
 
-        ImageMoniker ISuggestedAction.IconMoniker
-        {
-            get
-            {
-                return default(ImageMoniker);
-            }
-        }
+        ImageMoniker ISuggestedAction.IconMoniker => default;
 
-        public string InputGestureText
-        {
-            get
-            {
-                return null;
-            }
-        }
+        public string InputGestureText => null;
 
-        public bool HasActionSets
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool HasActionSets => false;
 
         public Task<IEnumerable<SuggestedActionSet>> GetActionSetsAsync(CancellationToken cancellationToken)
         {
